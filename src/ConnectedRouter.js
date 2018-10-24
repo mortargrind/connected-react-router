@@ -34,8 +34,15 @@ const createConnectedRouter = (structure) => {
           hash: hashInHistory,
         } = props.history.location
 
+        /*
+        Semih: This block prevents new actions being fired on custom middlewares;
+        since it triggers on direct store subscriptions.
+        Disabling this block will just affect the time travelling:
+        Until a fix/update lands on the original repo or we find a more suitable solution
+        to the 'redux state resetting on location changes' problem, this will do the job.
+        */
         // If we do time travelling, the location in store is changed but location in history is not changed
-        if (pathnameInHistory !== pathnameInStore || searchInHistory !== searchInStore || hashInHistory !== hashInStore) {
+        /*if (pathnameInHistory !== pathnameInStore || searchInHistory !== searchInStore || hashInHistory !== hashInStore) {
           this.inTimeTravelling = true
           // Update history's location to match store's location
           props.history.push({
@@ -43,7 +50,7 @@ const createConnectedRouter = (structure) => {
             search: searchInStore,
             hash: hashInStore,
           })
-        }
+        }*/
       })
 
       const handleLocationChange = (location, action) => {
